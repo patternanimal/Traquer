@@ -55,6 +55,10 @@
                                     <constraint firstAttribute="trailingMargin" secondItem="S9A-rX-kU7" secondAttribute="trailing" id="aid-JL-aru"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LeI-sv-MON" customClass="RatingControl" customModule="Traquer" customModuleProvider="target">
+                                <rect key="frame" x="20" y="496" width="200" height="110"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
