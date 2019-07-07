@@ -15,6 +15,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var mealLabel: UILabel!
+    
     /*
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
      or constructed as part of adding a new meal.
@@ -35,6 +37,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             nameTextField.text   = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
+            mealLabel.text = meal.date
+        } else {
+            let dateCal = Date()
+            let formatter = DateFormatter()
+            formatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY")
+            let result = formatter.string(from: dateCal)
+            mealLabel.text = result
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
@@ -111,8 +120,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
+        let date = mealLabel.text ?? ""
         // Set the meal to be passed to MealTableViewController after the unwind segue.
-        meal = Meal(name: name, photo: photo, rating: rating)
+        meal = Meal(name: name, photo: photo, rating: rating, date: date)
     }
     
     //MARK: Actions    
