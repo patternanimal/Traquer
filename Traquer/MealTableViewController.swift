@@ -44,6 +44,10 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 250.0;//Choose your custom row height
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,11 +62,13 @@ class MealTableViewController: UITableViewController {
         // Fetches the appropriate meal for the data source layout.
         let meal = meals[indexPath.row]
         
-        cell.nameLabel.text = meal.name
         cell.photoImageView.image = meal.photo
         cell.ratingControl.rating = meal.rating
         cell.date.text = meal.date
         cell.liftLabel.text = meal.lift
+        
+        // Init volume display
+        cell.createLabelsAs(dict: meal.volume)
         
         return cell
     }
@@ -143,15 +149,15 @@ class MealTableViewController: UITableViewController {
         let photo3 = UIImage(named: "meal3")
         
         
-        guard let meal1 = Meal(name: "Egg Meal", photo: photo1, rating: 2, date: "June 6, 2019", lift: "Deadlift") else {
+        guard let meal1 = Meal(name: "Egg Meal", photo: photo1, rating: 2, date: "June 6, 2019", lift: "Deadlift", volume: ["150":"7", "160":"6", "200":"2"]) else {
             fatalError("Unable to create meal1")
         }
         
-        guard let meal2 = Meal(name: "Mac 'n Cheese", photo: photo2, rating: 5, date: "June 7, 2019", lift: "Bench") else {
+        guard let meal2 = Meal(name: "Mac 'n Cheese", photo: photo2, rating: 5, date: "June 7, 2019", lift: "Bench", volume: ["215":"8", "160":"16"]) else {
             fatalError("Unable to create meal2")
         }
         
-        guard let meal3 = Meal(name: "Shrimp Soup", photo: photo3, rating: 1, date: "June 8, 2019", lift: "Skwaat") else {
+        guard let meal3 = Meal(name: "Shrimp Soup", photo: photo3, rating: 1, date: "June 8, 2019", lift: "Skwaat", volume: ["315":"3"]) else {
             fatalError("Unable to create meal3")
         }
         

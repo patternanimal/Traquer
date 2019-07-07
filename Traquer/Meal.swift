@@ -18,6 +18,7 @@ class Meal: NSObject, NSCoding {
         static let rating = "rating"
         static let date = "date"
         static let lift = "lift"
+        static let volume = "volume"
     }
     
     var name: String
@@ -25,13 +26,14 @@ class Meal: NSObject, NSCoding {
     var rating: Int
     var date: String
     var lift: String
+    var volume: [String: String]
     
     //MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("workouts")
     
     //MARK: Initializers
-    init?(name: String, photo: UIImage?, rating: Int, date: String, lift: String) {
+    init?(name: String, photo: UIImage?, rating: Int, date: String, lift: String, volume: [String: String]) {
         // Return if invalid values
         // The name must not be empty
         guard !name.isEmpty else {
@@ -46,6 +48,10 @@ class Meal: NSObject, NSCoding {
             return nil
         }
         
+        guard !volume.isEmpty else {
+            return nil
+        }
+        
         // The rating must be between 0 and 5 inclusively
         guard (rating >= 0) && (rating <= 5) else {
             return nil
@@ -56,6 +62,7 @@ class Meal: NSObject, NSCoding {
         self.rating = rating
         self.date = date
         self.lift = lift
+        self.volume = volume
         
     }
     
@@ -65,6 +72,8 @@ class Meal: NSObject, NSCoding {
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(rating, forKey: PropertyKey.rating)
         aCoder.encode(date, forKey: PropertyKey.date)
+        aCoder.encode(volume, forKey: PropertyKey.volume)
+        aCoder.encode(lift, forKey: PropertyKey.lift)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -89,8 +98,13 @@ class Meal: NSObject, NSCoding {
             return nil
         }
         
+        guard let volume = aDecoder.decodeObject(forKey: PropertyKey.volume) as? [String: String] else {
+            os_log("Unable to decode the date for a Workout object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
         // Must call designated initializer.
-        self.init(name: name, photo: photo, rating: rating, date: date, lift: lift)
+        self.init(name: name, photo: photo, rating: rating, date: date, lift: lift, volume: volume)
     }
     
     

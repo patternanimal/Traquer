@@ -28,11 +28,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     // Savables for Workout
     var selectedLift: String?
+    var volume: [String: String] = [:]
     
     // Track data about the current picker state
     // TODO do I need both of these, clean it up!
     var currentPickerIndex: Int = 0
     var currentPickerString: String?
+    var currentWeightKey: String = ""
     
     
     /*
@@ -203,10 +205,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             // Process Weight
             self.templateFinishButton.isHidden = true
             createLabelAs(type: "Weight", value: currentPickerString ?? "error")
+            currentWeightKey = currentPickerString ?? "error"
             transactionId+=1
         case 3:
             // Process Sets
             createLabelAs(type: "Sets", value: currentPickerString ?? "error")
+            
+            // Add the sets value for weight key
+            volume[currentWeightKey] = currentPickerString
+            
             transactionId+=1
         case 4:
             transactionId+=1
@@ -236,8 +243,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             case 1:
                 // Select Lift
                 self.sessionTemplatePicker.isHidden = false
-                templateNameLabel.text = "Select Lift"
-                templateSelectButton.setTitle("Add Lift", for: .normal)
+                templateNameLabel.text = "Lift"
+                templateSelectButton.setTitle("Add", for: .normal)
                 transitionTo += 1
             case 2:
                 // Select Weight
@@ -255,8 +262,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 self.sessionTemplatePicker.selectRow(0, inComponent: 0, animated: false)
                 
                 self.sessionTemplatePicker.isHidden = false
-                templateNameLabel.text = "Enter Set: Weight"
-                templateSelectButton.setTitle("Add Weight", for: .normal)
+                templateNameLabel.text = "Weight"
+                templateSelectButton.setTitle("Add", for: .normal)
                 transitionTo += 1
             case 3:
                 // Select Reps
@@ -271,13 +278,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 self.sessionTemplatePicker.selectRow(0, inComponent: 0, animated: false)
                 
                 self.sessionTemplatePicker.isHidden = false
-                self.templateNameLabel.text = "Enter Set: Reps"
-                self.templateSelectButton.setTitle("Add Reps", for: .normal)
+                self.templateNameLabel.text = "Sets"
+                self.templateSelectButton.setTitle("Add", for: .normal)
                 transitionTo += 1
             case 4:
                 self.sessionTemplatePicker.isHidden = true
                 self.templateFinishButton.setTitle("Add Next", for: .normal)
-                templateNameLabel.text = "Add Another Set?"
+                templateNameLabel.text = "Add Another Weight?"
                 templateSelectButton.setTitle("Finish", for: .normal)
                 self.templateFinishButton.isHidden = false
                 transitionTo += 1
@@ -287,7 +294,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 self.sessionTemplatePicker.isHidden = true
                 self.templateFinishButton.isHidden = true
                 templateNameLabel.text = "How Did You Feel?"
-                templateSelectButton.setTitle("Add Rating", for: .normal)
+                templateSelectButton.setTitle("Add", for: .normal)
                 transitionTo += 1
             case 6:
                 // Select Save
@@ -332,7 +339,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let date = navigationItem.title ?? ""
         let lift = selectedLift ?? "error"
         // Set the meal to be passed to MealTableViewController after the unwind segue.
-        meal = Meal(name: name, photo: photo, rating: rating, date: date, lift: lift)
+        meal = Meal(name: name, photo: photo, rating: rating, date: date, lift: lift, volume: volume)
     }
     
     //MARK: Actions    

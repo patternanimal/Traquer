@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="180" id="T7e-Zr-GsL" customClass="MealTableViewCell" customModule="Traquer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="180"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="250" id="T7e-Zr-GsL" customClass="MealTableViewCell" customModule="Traquer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="250"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T7e-Zr-GsL" id="wQw-uZ-Sft">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="179.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="249.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="8ST-x8-fwp">
@@ -37,13 +37,6 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TEj-hv-0pK">
-                                            <rect key="frame" x="20" y="148" width="177" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lift Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFY-Qc-QMq">
                                             <rect key="frame" x="121" y="11" width="177" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -51,8 +44,12 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WjO-Ca-V0T">
+                                            <rect key="frame" x="0.0" y="121" width="113" height="129"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </stackView>
                                         <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-wV-fVM" customClass="RatingControl" customModule="Traquer" customModuleProvider="target">
-                                            <rect key="frame" x="121" y="76" width="252" height="44"/>
+                                            <rect key="frame" x="121" y="195" width="252" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </stackView>
                                     </subviews>
@@ -60,9 +57,9 @@
                                 <connections>
                                     <outlet property="date" destination="r3t-2w-u7i" id="eey-Os-rOg"/>
                                     <outlet property="liftLabel" destination="CFY-Qc-QMq" id="QWz-c6-lT1"/>
-                                    <outlet property="nameLabel" destination="TEj-hv-0pK" id="h01-98-9a2"/>
                                     <outlet property="photoImageView" destination="8ST-x8-fwp" id="xxX-8E-ABG"/>
                                     <outlet property="ratingControl" destination="YgT-wV-fVM" id="l8n-eQ-1W5"/>
+                                    <outlet property="volumeStackView" destination="WjO-Ca-V0T" id="cRb-hb-5ag"/>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="EMt-vT-BDm"/>
                                 </connections>
                             </tableViewCell>
