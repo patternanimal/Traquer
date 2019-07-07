@@ -26,6 +26,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     var pickerList: [String] = [String]()
     var labelList: [UILabel] = [UILabel]()
     
+    // Savables for Workout
+    var selectedLift: String?
+    
     // Track data about the current picker state
     // TODO do I need both of these, clean it up!
     var currentPickerIndex: Int = 0
@@ -85,7 +88,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         transitionToNext()
     }
     
-    // Ryan ADDS
+    //MARK: View Styling
     private func styleRoundedButton(button: UIButton) {
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 1
@@ -190,6 +193,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             self.sessionTemplatePicker.resignFirstResponder()
             self.sessionTemplatePicker.isHidden = true
             
+            // Store for Workout
+            selectedLift = currentPickerString
+            
             // Create a new label entry from picker selection
             createLabelAs(type: "Lift", value: currentPickerString ?? "error")
             transactionId+=1
@@ -280,7 +286,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 ratingControl.isHidden = false
                 self.sessionTemplatePicker.isHidden = true
                 self.templateFinishButton.isHidden = true
-                templateNameLabel.text = "Rate Session"
+                templateNameLabel.text = "How Did You Feel?"
                 templateSelectButton.setTitle("Add Rating", for: .normal)
                 transitionTo += 1
             case 6:
@@ -324,8 +330,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let photo = photoImageView.image
         let rating = ratingControl.rating
         let date = navigationItem.title ?? ""
+        let lift = selectedLift ?? "error"
         // Set the meal to be passed to MealTableViewController after the unwind segue.
-        meal = Meal(name: name, photo: photo, rating: rating, date: date)
+        meal = Meal(name: name, photo: photo, rating: rating, date: date, lift: lift)
     }
     
     //MARK: Actions    

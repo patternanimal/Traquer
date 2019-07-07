@@ -62,6 +62,7 @@ class MealTableViewController: UITableViewController {
         cell.photoImageView.image = meal.photo
         cell.ratingControl.rating = meal.rating
         cell.date.text = meal.date
+        cell.liftLabel.text = meal.lift
         
         return cell
     }
@@ -142,15 +143,15 @@ class MealTableViewController: UITableViewController {
         let photo3 = UIImage(named: "meal3")
         
         
-        guard let meal1 = Meal(name: "Egg Meal", photo: photo1, rating: 2, date: "June 6, 2019") else {
+        guard let meal1 = Meal(name: "Egg Meal", photo: photo1, rating: 2, date: "June 6, 2019", lift: "Deadlift") else {
             fatalError("Unable to create meal1")
         }
         
-        guard let meal2 = Meal(name: "Mac 'n Cheese", photo: photo2, rating: 5, date: "June 7, 2019") else {
+        guard let meal2 = Meal(name: "Mac 'n Cheese", photo: photo2, rating: 5, date: "June 7, 2019", lift: "Bench") else {
             fatalError("Unable to create meal2")
         }
         
-        guard let meal3 = Meal(name: "Shrimp Soup", photo: photo3, rating: 1, date: "June 8, 2019") else {
+        guard let meal3 = Meal(name: "Shrimp Soup", photo: photo3, rating: 1, date: "June 8, 2019", lift: "Skwaat") else {
             fatalError("Unable to create meal3")
         }
         
