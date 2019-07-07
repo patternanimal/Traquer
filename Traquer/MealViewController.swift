@@ -16,7 +16,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
     // aka the date field TODO change later
-    @IBOutlet weak var mealLabel: UILabel!
     @IBOutlet weak var sessionTemplatePicker: UIPickerView!
     @IBOutlet weak var templateSelectButton: UIButton!
     @IBOutlet weak var templateNameLabel: UILabel!
@@ -51,7 +50,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         //self.nameTextField.isHidden = true
         self.ratingControl.isHidden = true
         self.templateNameLabel.isHidden = true
-        self.mealLabel.isHidden = true
+        //self.mealLabel.isHidden = true
         
         // Handle user input through delegate callback
         nameTextField.delegate = self
@@ -61,14 +60,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             nameTextField.text   = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
-            mealLabel.text = meal.date
+            //mealLabel.text = meal.date
             navigationItem.title = meal.date
         } else {
             let dateCal = Date()
             let formatter = DateFormatter()
             formatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY")
             let result = formatter.string(from: dateCal)
-            mealLabel.text = result
+            //mealLabel.text = result
+            navigationItem.title = result
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
@@ -200,7 +200,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
-        let date = mealLabel.text ?? ""
+        let date = navigationItem.title ?? ""
         // Set the meal to be passed to MealTableViewController after the unwind segue.
         meal = Meal(name: name, photo: photo, rating: rating, date: date)
     }

@@ -85,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TcK-Xq-zoZ">
-                                <rect key="frame" x="20" y="108" width="374" height="752"/>
+                                <rect key="frame" x="20" y="108" width="374" height="723.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dop-Gj-1aP">
                                         <rect key="frame" x="129" y="0.0" width="116.5" height="20.5"/>
@@ -104,7 +104,7 @@
                                         </connections>
                                     </button>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzP-H3-VFd">
-                                        <rect key="frame" x="27" y="89.5" width="320" height="216"/>
+                                        <rect key="frame" x="27" y="89" width="320" height="216"/>
                                     </pickerView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f09-b8-bM1" customClass="RatingControl" customModule="Traquer" customModuleProvider="target">
                                         <rect key="frame" x="61" y="313.5" width="252" height="44"/>
@@ -125,12 +125,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0J-Yk-4J5">
-                                        <rect key="frame" x="146" y="731.5" width="82" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="S9A-rX-kU7" secondAttribute="trailing" id="aid-JL-aru"/>
@@ -158,7 +152,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="mealLabel" destination="h0J-Yk-4J5" id="Wiv-I6-aqj"/>
                         <outlet property="nameTextField" destination="S9A-rX-kU7" id="J6m-LJ-EOK"/>
                         <outlet property="photoImageView" destination="rev-jx-gdq" id="Kdt-Hn-drY"/>
                         <outlet property="ratingControl" destination="f09-b8-bM1" id="Xhb-jm-ltP"/>
