@@ -12,17 +12,23 @@ import os.log
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: properties
-    //@IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
-    // aka the date field TODO change later
     @IBOutlet weak var sessionTemplatePicker: UIPickerView!
     @IBOutlet weak var templateSelectButton: UIButton!
     @IBOutlet weak var templateNameLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var labelsStackView: UIStackView!
     
     var transitionTo: Int = 0
+    var transactionId: Int = 0
     var pickerList: [String] = [String]()
+    var labelList: [UILabel] = [UILabel]()
+    
+    // Track data about the current picker state
+    // TODO do I need both of these, clean it up!
+    var currentPickerIndex: Int = 0
+    var currentPickerString: String?
     
     
     /*
@@ -41,7 +47,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Connect data:
         self.sessionTemplatePicker.delegate = self
         self.sessionTemplatePicker.dataSource = self
-        pickerList = ["Bench", "Squat", "Deadlift"]
+        pickerList = ["", "Bench", "Squat", "Deadlift"]
         
         
         // Disable views initially, to be later turned on through flow
@@ -51,6 +57,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         self.photoImageView.isHidden = true
         //self.nameTextField.isHidden = true
         self.ratingControl.isHidden = true
+        
+        // Style buttons with rounded edges
+        styleRoundedButton(button: self.templateSelectButton)
         
         // Handle user input through delegate callback
         //nameTextField.delegate = self
@@ -75,6 +84,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         transitionToNext()
     }
     
+    // Ryan ADDS
+    private func styleRoundedButton(button: UIButton) {
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+    }
+    
     //MARK: Picker Template Session List
     public func numberOfComponents(in pickerView: UIPickerView) -> Int{
         return 1
@@ -92,32 +108,32 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        // Set picker index anytime a new selection is made
+        currentPickerIndex = row
         
-        // Set the next label text
-        self.templateNameLabel.text = pickerList[row] as String
-        
-        // Turn off functionality
-        self.sessionTemplatePicker.resignFirstResponder()
-        self.sessionTemplatePicker.isHidden = true
-        
-        // Create a new label entry from picker selection
-        createLabelAs(type: "Lift", value: pickerList[row] as String)
-        
-        transitionToNext()
+        // Set picker string already converted when a new selection is made
+        currentPickerString = pickerList[row] as String
     }
     
     private func createLabelAs(type: String, value: String) {
         
-        var label: UILabel = UILabel()
-        label.frame = CGRect(x: 0, y: 0
-            , width: 100, height: 30
-        )
-        label.backgroundColor = UIColor.black
-        label.textColor = UIColor.white
+        let label: UILabel = UILabel()
+        
+        if labelList.isEmpty {
+            label.frame = CGRect(x: 0, y: 0
+                , width: 100, height: 30
+            )
+        } else {
+            label.frame = CGRect(x: 0, y: labelList[labelList.endIndex - 1].frame.origin.y + 30 , width: 100, height: 30)
+        
+        }
+        //label.backgroundColor = UIColor.black
+        //label.textColor = UIColor.white
         label.textAlignment = NSTextAlignment.center
-        var labelText: String = type + ": " + value
+        let labelText: String = type + ": " + value
         label.text = labelText
-        self.stackView.addSubview(label)
+        self.labelsStackView.addSubview(label)
+        self.labelList.append(label)
     }
     
     
@@ -162,6 +178,30 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         dismiss(animated: true, completion: nil)
     }
     
+    private func processTransaction() {
+        // Handle any transactions that occur
+        switch transactionId {
+        case 0:
+            transactionId+=1
+        case 1:
+            // Turn off functionality of Lift picker
+            self.sessionTemplatePicker.resignFirstResponder()
+            self.sessionTemplatePicker.isHidden = true
+            
+            // Create a new label entry from picker selection
+            createLabelAs(type: "Lift", value: currentPickerString ?? "error")
+            transactionId+=1
+        case 2:
+            ratingControl.isHidden = true
+            createLabelAs(type: "Rating", value: String(ratingControl.rating))
+            transactionId+=1
+        case 3:
+            transactionId+=1
+        default:
+            fatalError("transaction ID exceeded available transactions")
+        }
+        
+    }
     
     //MARK: Inner Navigation
     private func transitionToNext() {
@@ -179,6 +219,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             case 2:
                 ratingControl.isHidden = false
                 templateNameLabel.text = "Rate Session"
+                transitionTo += 1
+            case 3:
+                templateSelectButton.setTitle("Done", for: .normal)
                 transitionTo += 1
             default:
                 fatalError("Transitioned to invalid state")
@@ -212,7 +255,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             return
         }
        
-        //let name = nameTextField.text ?? ""
         let name = "Placeholder Name"
         let photo = photoImageView.image
         let rating = ratingControl.rating
@@ -223,12 +265,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     //MARK: Actions    
     @IBAction func templateAction(_ sender: UIButton) {
-        self.templateSelectButton.resignFirstResponder()
-        //self.templateSelectButton.isHidden = true
-        createLabelAs(type: "label", value: "value")
-        
+        processTransaction()
         transitionToNext()
-        
     }
     
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {

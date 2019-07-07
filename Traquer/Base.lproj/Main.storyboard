@@ -84,8 +84,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TcK-Xq-zoZ">
-                                <rect key="frame" x="20" y="108" width="374" height="685.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TcK-Xq-zoZ">
+                                <rect key="frame" x="20" y="108" width="374" height="1301"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dop-Gj-1aP">
                                         <rect key="frame" x="129" y="0.0" width="116.5" height="20.5"/>
@@ -97,11 +97,11 @@
                                         <rect key="frame" x="27" y="28.5" width="320" height="216"/>
                                     </pickerView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfg-bf-Mbj">
-                                        <rect key="frame" x="152.5" y="252.5" width="69" height="53"/>
-                                        <color key="backgroundColor" red="0.084491189980064219" green="0.085875320270742406" blue="1" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="157" y="252.5" width="60" height="53"/>
+                                        <color key="backgroundColor" red="0.084491189980064219" green="0.085875320270742406" blue="1" alpha="0.3744025735" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                        <state key="normal" title="Next">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Add">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
                                             <action selector="templateAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BCB-HL-zuR"/>
@@ -120,7 +120,16 @@
                                             <outletCollection property="gestureRecognizers" destination="Azt-BI-u7y" appends="YES" id="SqA-Q9-1Ab"/>
                                         </connections>
                                     </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="89Y-Fk-2PV">
+                                        <rect key="frame" x="20" y="693.5" width="334" height="607.5"/>
+                                    </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="89Y-Fk-2PV" firstAttribute="leading" secondItem="TcK-Xq-zoZ" secondAttribute="leading" id="0LB-mg-6rj"/>
+                                    <constraint firstItem="89Y-Fk-2PV" firstAttribute="leading" secondItem="TcK-Xq-zoZ" secondAttribute="leading" constant="20" id="NGQ-Hj-NeO"/>
+                                    <constraint firstAttribute="trailing" secondItem="89Y-Fk-2PV" secondAttribute="trailing" id="jTe-lX-9X9"/>
+                                    <constraint firstAttribute="trailing" secondItem="89Y-Fk-2PV" secondAttribute="trailing" constant="20" id="o1z-Bb-Ak8"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -144,6 +153,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="labelsStackView" destination="89Y-Fk-2PV" id="Ph1-HE-9hS"/>
                         <outlet property="photoImageView" destination="rev-jx-gdq" id="Kdt-Hn-drY"/>
                         <outlet property="ratingControl" destination="f09-b8-bM1" id="Xhb-jm-ltP"/>
                         <outlet property="saveButton" destination="nQS-AC-MyK" id="Lig-c5-FHB"/>
