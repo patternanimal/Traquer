@@ -85,22 +85,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TcK-Xq-zoZ">
-                                <rect key="frame" x="20" y="108" width="374" height="438.5"/>
+                                <rect key="frame" x="20" y="108" width="374" height="752"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0J-Yk-4J5">
-                                        <rect key="frame" x="166" y="0.0" width="42" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dop-Gj-1aP">
+                                        <rect key="frame" x="129" y="0.0" width="116.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9A-rX-kU7">
-                                        <rect key="frame" x="0.0" y="28.5" width="374" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfg-bf-Mbj">
+                                        <rect key="frame" x="71" y="28.5" width="232" height="53"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                        <state key="normal" title="Select Template">
+                                            <color key="titleColor" red="0.36828864561999752" green="0.34666116625318233" blue="1" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="templateAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BCB-HL-zuR"/>
+                                        </connections>
+                                    </button>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzP-H3-VFd">
+                                        <rect key="frame" x="27" y="89.5" width="320" height="216"/>
+                                    </pickerView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f09-b8-bM1" customClass="RatingControl" customModule="Traquer" customModuleProvider="target">
+                                        <rect key="frame" x="61" y="313.5" width="252" height="44"/>
+                                    </stackView>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="rev-jx-gdq">
-                                        <rect key="frame" x="27" y="66.5" width="320" height="320"/>
+                                        <rect key="frame" x="27" y="365.5" width="320" height="320"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="rev-jx-gdq" secondAttribute="height" multiplier="1:1" id="INu-WA-2a7"/>
@@ -109,9 +119,18 @@
                                             <outletCollection property="gestureRecognizers" destination="Azt-BI-u7y" appends="YES" id="SqA-Q9-1Ab"/>
                                         </connections>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f09-b8-bM1" customClass="RatingControl" customModule="Traquer" customModuleProvider="target">
-                                        <rect key="frame" x="61" y="394.5" width="252" height="44"/>
-                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter workout notes..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9A-rX-kU7">
+                                        <rect key="frame" x="0.0" y="693.5" width="374" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0J-Yk-4J5">
+                                        <rect key="frame" x="146" y="731.5" width="82" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="S9A-rX-kU7" secondAttribute="trailing" id="aid-JL-aru"/>
@@ -144,6 +163,9 @@
                         <outlet property="photoImageView" destination="rev-jx-gdq" id="Kdt-Hn-drY"/>
                         <outlet property="ratingControl" destination="f09-b8-bM1" id="Xhb-jm-ltP"/>
                         <outlet property="saveButton" destination="nQS-AC-MyK" id="Lig-c5-FHB"/>
+                        <outlet property="sessionTemplatePicker" destination="dzP-H3-VFd" id="8dM-HX-fnI"/>
+                        <outlet property="templateNameLabel" destination="Dop-Gj-1aP" id="n7H-yb-uZZ"/>
+                        <outlet property="templateSelectButton" destination="Lfg-bf-Mbj" id="brs-Fv-Xsw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

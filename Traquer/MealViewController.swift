@@ -9,13 +9,20 @@
 import UIKit
 import os.log
 
-class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    // aka the date field TODO change later
     @IBOutlet weak var mealLabel: UILabel!
+    @IBOutlet weak var sessionTemplatePicker: UIPickerView!
+    @IBOutlet weak var templateSelectButton: UIButton!
+    @IBOutlet weak var templateNameLabel: UILabel!
+    var transitionTo: Int = 0
+    var pickerList: [String] = [String]()
+    
     
     /*
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
@@ -25,19 +32,37 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Picker Data
+        // Connect data:
+        self.sessionTemplatePicker.delegate = self
+        self.sessionTemplatePicker.dataSource = self
+        pickerList = ["Heavy Bench", "Light Bench", "Heavy Single / Drop"]
+        
+        
+        // Disable views initially, to be later turned on through flow
+        self.templateSelectButton.isHidden = true
+        self.sessionTemplatePicker.isHidden = true
+        self.sessionTemplatePicker.isHidden = true
+        self.photoImageView.isHidden = true
+        //self.nameTextField.isHidden = true
+        self.ratingControl.isHidden = true
+        self.templateNameLabel.isHidden = true
+        self.mealLabel.isHidden = true
         
         // Handle user input through delegate callback
         nameTextField.delegate = self
         
         // Set up views if editing an existing Meal.
         if let meal = meal {
-            navigationItem.title = meal.name
             nameTextField.text   = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
             mealLabel.text = meal.date
+            navigationItem.title = meal.date
         } else {
             let dateCal = Date()
             let formatter = DateFormatter()
@@ -48,7 +73,41 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         // Enable the Save button only if the text field has a valid Meal name.
         updateSaveButtonState()
+        
+        transitionToNext()
     }
+    
+    //MARK: Picker Template Session List
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int{
+        return 1
+    }
+    
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        
+        return pickerList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        self.view.endEditing(true)
+        return pickerList[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        // Set the next label text
+        self.templateNameLabel.text = pickerList[row] as String
+        
+        // Turn off functionality
+        self.sessionTemplatePicker.resignFirstResponder()
+        self.sessionTemplatePicker.isHidden = true
+        
+        // Enable template name label now that it is set
+        self.templateNameLabel.isHidden = false
+        
+        transitionToNext()
+    }
+    
     
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -69,7 +128,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Chance to handle/process the input just after
         // resigning first repsonder from textFieldShouldReturn
         updateSaveButtonState()
-        navigationItem.title = textField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -90,6 +148,28 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         // Dismiss the picker.
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    //MARK: Inner Navigation
+    private func transitionToNext() {
+        // TODO write a way to easily transition between views
+        
+        switch transitionTo {
+            case 0:
+                self.templateSelectButton.isHidden = false
+                transitionTo += 1
+            case 1:
+                self.sessionTemplatePicker.isHidden = false
+                transitionTo += 1
+            case 2:
+                ratingControl.isHidden = false
+                transitionTo += 1
+            default:
+                fatalError("Transitioned to invalid state")
+        }
+        
+        
     }
     
     //MARK: Navigation
@@ -126,6 +206,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     //MARK: Actions    
+    @IBAction func templateAction(_ sender: UIButton) {
+        self.templateSelectButton.resignFirstResponder()
+        self.templateSelectButton.isHidden = true
+        transitionToNext()
+        
+    }
+    
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // If user picks the image while the keyboard is up
         nameTextField.resignFirstResponder()
