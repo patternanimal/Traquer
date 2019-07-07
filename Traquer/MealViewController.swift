@@ -16,6 +16,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var sessionTemplatePicker: UIPickerView!
     @IBOutlet weak var templateSelectButton: UIButton!
+    @IBOutlet weak var templateFinishButton: UIButton!
     @IBOutlet weak var templateNameLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var labelsStackView: UIStackView!
@@ -53,12 +54,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Disable views initially, to be later turned on through flow
         self.templateSelectButton.isHidden = true
         self.sessionTemplatePicker.isHidden = true
-        self.sessionTemplatePicker.isHidden = true
         self.photoImageView.isHidden = true
         self.ratingControl.isHidden = true
+        self.templateFinishButton.isHidden = true
         
         // Style buttons with rounded edges
         styleRoundedButton(button: self.templateSelectButton)
+        styleRoundedButton(button: self.templateFinishButton)
         
         // Handle user input through delegate callback
         //nameTextField.delegate = self
@@ -181,9 +183,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Handle any transactions that occur
         switch transactionId {
         case 0:
+            // Process Start
             transactionId+=1
         case 1:
-            // Turn off functionality of Lift picker
+            // Process Lift
             self.sessionTemplatePicker.resignFirstResponder()
             self.sessionTemplatePicker.isHidden = true
             
@@ -191,10 +194,23 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             createLabelAs(type: "Lift", value: currentPickerString ?? "error")
             transactionId+=1
         case 2:
+            // Process Weight
+            self.templateFinishButton.isHidden = true
+            createLabelAs(type: "Weight", value: currentPickerString ?? "error")
+            transactionId+=1
+        case 3:
+            // Process Sets
+            createLabelAs(type: "Sets", value: currentPickerString ?? "error")
+            transactionId+=1
+        case 4:
+            transactionId+=1
+        case 5:
+            // Process Rating
             ratingControl.isHidden = true
             createLabelAs(type: "Rating", value: String(ratingControl.rating))
             transactionId+=1
-        case 3:
+        case 6:
+            // Process Save
             transactionId+=1
         default:
             fatalError("transaction ID exceeded available transactions")
@@ -203,24 +219,74 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     //MARK: Inner Navigation
-    private func transitionToNext() {
-        // TODO write a way to easily transition between views
-        
+    private func transitionToNext() {        
         switch transitionTo {
             case 0:
+                // Select Start
                 self.templateSelectButton.isHidden = false
                 templateNameLabel.text = "Create New Workout"
+                templateSelectButton.setTitle("START", for: .normal)
                 transitionTo += 1
             case 1:
+                // Select Lift
                 self.sessionTemplatePicker.isHidden = false
                 templateNameLabel.text = "Select Lift"
+                templateSelectButton.setTitle("Add Lift", for: .normal)
                 transitionTo += 1
             case 2:
-                ratingControl.isHidden = false
-                templateNameLabel.text = "Rate Session"
+                // Select Weight
+                self.sessionTemplatePicker.isHidden = false
+                self.templateFinishButton.isHidden = true
+                // set new picker data
+                pickerList.removeAll()
+                for n in 0...500 {
+                    if n % 5 == 0 {
+                        pickerList.append(String(n))
+                    }
+                }
+                sessionTemplatePicker.reloadAllComponents()
+                // Reset to 0 to force user to choose value
+                self.sessionTemplatePicker.selectRow(0, inComponent: 0, animated: false)
+                
+                self.sessionTemplatePicker.isHidden = false
+                templateNameLabel.text = "Enter Set: Weight"
+                templateSelectButton.setTitle("Add Weight", for: .normal)
                 transitionTo += 1
             case 3:
-                templateSelectButton.setTitle("Done", for: .normal)
+                // Select Reps
+
+                // set new picker data
+                pickerList.removeAll()
+                for n in 0...20 {
+                    pickerList.append(String(n))
+                }
+                sessionTemplatePicker.reloadAllComponents()
+                // Reset to 0 to force user to choose value
+                self.sessionTemplatePicker.selectRow(0, inComponent: 0, animated: false)
+                
+                self.sessionTemplatePicker.isHidden = false
+                self.templateNameLabel.text = "Enter Set: Reps"
+                self.templateSelectButton.setTitle("Add Reps", for: .normal)
+                transitionTo += 1
+            case 4:
+                self.sessionTemplatePicker.isHidden = true
+                self.templateFinishButton.setTitle("Add Next", for: .normal)
+                templateNameLabel.text = "Add Another Set?"
+                templateSelectButton.setTitle("Finish", for: .normal)
+                self.templateFinishButton.isHidden = false
+                transitionTo += 1
+            case 5:
+                // Select Rating
+                ratingControl.isHidden = false
+                self.sessionTemplatePicker.isHidden = true
+                self.templateFinishButton.isHidden = true
+                templateNameLabel.text = "Rate Session"
+                templateSelectButton.setTitle("Add Rating", for: .normal)
+                transitionTo += 1
+            case 6:
+                // Select Save
+                templateSelectButton.setTitle("Save", for: .normal)
+                templateNameLabel.text = "Workout Session Complete!"
                 transitionTo += 1
             default:
                 fatalError("transition to exceeded available transitions")
@@ -265,6 +331,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     //MARK: Actions    
     @IBAction func templateAction(_ sender: UIButton) {
         processTransaction()
+        transitionToNext()
+    }
+    
+    @IBAction func finishAction(_ sender: UIButton) {
+        processTransaction()
+        transitionTo -= 3
+        transactionId -= 3
         transitionToNext()
     }
     
