@@ -126,6 +126,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="89Y-Fk-2PV" firstAttribute="leading" secondItem="TcK-Xq-zoZ" secondAttribute="leading" id="0LB-mg-6rj"/>
+                                    <constraint firstAttribute="bottom" secondItem="89Y-Fk-2PV" secondAttribute="bottom" constant="8" id="2dl-5u-nxi"/>
                                     <constraint firstItem="89Y-Fk-2PV" firstAttribute="leading" secondItem="TcK-Xq-zoZ" secondAttribute="leading" constant="20" id="NGQ-Hj-NeO"/>
                                     <constraint firstAttribute="trailing" secondItem="89Y-Fk-2PV" secondAttribute="trailing" id="jTe-lX-9X9"/>
                                     <constraint firstAttribute="trailing" secondItem="89Y-Fk-2PV" secondAttribute="trailing" constant="20" id="o1z-Bb-Ak8"/>

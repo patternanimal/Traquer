@@ -55,7 +55,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         self.sessionTemplatePicker.isHidden = true
         self.sessionTemplatePicker.isHidden = true
         self.photoImageView.isHidden = true
-        //self.nameTextField.isHidden = true
         self.ratingControl.isHidden = true
         
         // Style buttons with rounded edges
@@ -121,15 +120,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         if labelList.isEmpty {
             label.frame = CGRect(x: 0, y: 0
-                , width: 100, height: 30
+                , width: 200, height: 30
             )
         } else {
-            label.frame = CGRect(x: 0, y: labelList[labelList.endIndex - 1].frame.origin.y + 30 , width: 100, height: 30)
+            label.frame = CGRect(x: 0, y: labelList[labelList.endIndex - 1].frame.origin.y + 38 , width: 200, height: 30)
         
         }
         //label.backgroundColor = UIColor.black
         //label.textColor = UIColor.white
-        label.textAlignment = NSTextAlignment.center
+        label.textAlignment = NSTextAlignment.left
         let labelText: String = type + ": " + value
         label.text = labelText
         self.labelsStackView.addSubview(label)
@@ -224,7 +223,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 templateSelectButton.setTitle("Done", for: .normal)
                 transitionTo += 1
             default:
-                fatalError("Transitioned to invalid state")
+                fatalError("transition to exceeded available transitions")
         }
         
         
