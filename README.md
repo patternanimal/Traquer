@@ -1,2 +1,2 @@
-# Ryan Olson
-# Powerlifting tracking software for personal use
+# Workout Tracking App
+# Simple iOS app made with swift
